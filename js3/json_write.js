@@ -1,5 +1,7 @@
 const fs=require("fs");
 
+
+
 const preke={
     pavadinimas: "Televizorius",
     kaina: 600,
