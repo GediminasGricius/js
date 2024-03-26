@@ -3,6 +3,7 @@ const str=fs.readFileSync("data.json").toString();
 
 const sandelys=JSON.parse(str);
 
+
 //console.log(sandelys);
 
 // Išvesti prekių pavadinimų sąrašą
