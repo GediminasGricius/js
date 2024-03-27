@@ -2,6 +2,7 @@
 const addBtn=document.getElementById("add_task");      //<button>
 const list=document.getElementById("tasks_list");      // <ul> - elementas
 const taskName=document.getElementById("task_name");   // <input>
+const clearTasks=document.getElementById("clear_tasks"); // <button> - išvalyti visą sąrašą
 
 // Kintamasis kuriame saugomos užduotys
 let tasks=[];
@@ -40,7 +41,19 @@ const addTask=()=>{
     localStorage.setItem("tasks",JSON.stringify(tasks));
 }
 
+const clearList=()=>{
+    //Išvalome masyvą
+    tasks=[];
+
+    //Išvalome localstorage
+    localStorage.removeItem("tasks");
+
+    //Atvaizduoti iš naujo
+    showTasks();
+}
+
 addBtn.onclick=addTask;
+clearTasks.onclick=clearList;
 
 //Pasiimame iš localstorage informaciją
 const lsTasks=localStorage.getItem("tasks");
