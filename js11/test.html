@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronometras</title>
+    <style>
+        #time-display {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="time-display">00:00:00</div>
+    <button id="start-stop">Pradėti</button>
+    <button id="reset">Pradėti iš naujo</button>
+    <button id="record">Fiksuoti</button>
+
+    <script>
+        let startTime;
+        let elapsedTime = 0;
+        let timerInterval;
+
+        const timeDisplay = document.getElementById('time-display');
+        const startStopButton = document.getElementById('start-stop');
+        const resetButton = document.getElementById('reset');
+        const recordButton = document.getElementById('record');
+
+        startStopButton.addEventListener('click', startStop);
+        resetButton.addEventListener('click', reset);
+        recordButton.addEventListener('click', recordTime);
+        startStopButton
+
+        function startStop() {
+            if (startStopButton.textContent === 'Pradėti') {
+                startStopButton.textContent = 'Stabdyti';
+                startTime = Date.now() - elapsedTime;
+                timerInterval = setInterval(updateTime, 1000);
+            } else {
+                startStopButton.textContent = 'Pradėti';
+                clearInterval(timerInterval);
+            }
+        }
+
+        function updateTime() {
+            const currentTime = Date.now();
+            elapsedTime = currentTime - startTime;
+            displayTime(elapsedTime);
+        }
+
+        function displayTime(time) {
+            const hours = Math.floor(time / 3600000);
+            const minutes = Math.floor((time % 3600000) / 60000);
+            const seconds = Math.floor((time % 60000) / 1000);
+            timeDisplay.textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+        }
+
+        function padZero(number) {
+            return number < 10 ? '0' + number : number;
+        }
+
+        function reset() {
+            clearInterval(timerInterval);
+            startStopButton.textContent = 'Pradėti';
+            elapsedTime = 0;
+            displayTime(elapsedTime);
+        }
+
+        function recordTime() {
+            console.log("Fiksuotas laikas:", timeDisplay.textContent);
+        }
+    </script>
+</body>
+
+</html>
