@@ -36,7 +36,7 @@ fetch('https://api.themoviedb.org/3/genre/movie/list?language=lt', req)
     const rodytiFilmusPagaZanra=()=>{
         const genreId=zanrasSelect.value;
         loading.style.display="block";
-        fetch(`https://api.themoviedb.org/3/discover/movie?language=lt&with_genres=${genreId}`,req)
+        fetch(`https://api.themovisaedb.org/3/discover/movie?language=lt&with_genres=${genreId}`,req)
         .then((response)=>{
             return response.json();
         })
