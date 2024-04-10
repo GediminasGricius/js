@@ -52,6 +52,12 @@ class Studentas {
         this.pavarde = pavarde;
         this._amzius = _amzius;
     }
+    artinka(a, b, c) {
+        if ()
+            ;
+        true;
+        false;
+    }
     // Setteris
     set amzius(a) {
         if (a > 0 && a < 150) {

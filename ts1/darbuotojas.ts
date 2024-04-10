@@ -53,6 +53,14 @@ class Studentas{
                     private _amzius:number){
         
     }
+
+
+    private artinka(a, b, c){
+        if (....)
+            true
+        false
+    }
+
     // Setteris
     set amzius(a:number){
         if (a>0 && a<150){
