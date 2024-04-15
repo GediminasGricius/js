@@ -17,6 +17,9 @@ suzinoti.onclick=()=>{
             
             })
             htmlResult.innerHTML=str;
-        
-    });
+        }).catch(()=>{
+            
+        })
+    
+    ;
 };
