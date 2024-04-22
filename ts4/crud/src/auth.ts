@@ -1,5 +1,6 @@
 import { userInfo } from "./app.js";
 import { loadData } from "./loadData.js";
+import { User } from "./user.js";
 
 function authExec(method:string){
     //Url prisijungimui/registracijai priklausomai nuo to koks atsiustas method kintamasis
@@ -39,9 +40,9 @@ function authExec(method:string){
         //Priskiriame ir token
         userInfo.idToken=data.idToken;
         userInfo.loggedin=true;
+        saveUser();
         //Paslėpiame logino sekciją ir parodome duomenų sekciją
-        (<HTMLElement>document.getElementById("loginSection")).style.display="none";
-        (<HTMLElement>document.getElementById("dataSection")).style.display="block";
+        hideLogin()
         //Užkrauname duomenis
         loadData();
     })
@@ -61,3 +62,63 @@ export function loginExec(){
 export function registerExec(){
     authExec("signUp");
 } 
+
+
+export function saveUser(){
+    localStorage.setItem("userInfo", JSON.stringify( userInfo) );
+}
+
+export function loadUser(){
+    const userStr=localStorage.getItem("userInfo");
+    if (userStr!=null){
+        const user:User=JSON.parse(userStr);
+        userInfo.email=user.email;
+        userInfo.idToken=user.idToken;
+        userInfo.loggedin=user.loggedin;
+        loadData();
+        hideLogin();
+    }
+}
+
+export function showLogin(){
+    (<HTMLElement>document.getElementById("loginSection")).style.display="block";
+    (<HTMLElement>document.getElementById("dataSection")).style.display="none";
+}
+
+export function hideLogin(){
+    (<HTMLElement>document.getElementById("loginSection")).style.display="none";
+    (<HTMLElement>document.getElementById("dataSection")).style.display="block";
+}
+
+export function logOut(){
+    localStorage.removeItem("userInfo");
+    showLogin();
+}
+
+export function deleteAccount(){
+    fetch(`https://identitytoolkit.googleapis.com/v1/accounts:delete?key=AIzaSyAZuYggKgrCTnZfT9yn6NIeRFV0LmgY8tg`,{
+        method:"POST",
+        headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+        },
+        
+        //Abiem atvejais siunčiame el. paštą paimtą iš formos ir slaptažodį taip pat paimtą iš formos
+        body: JSON.stringify({
+            idToken:userInfo.idToken
+        })
+    })
+    .then((result)=>{
+        return result.json();
+    })
+    .then((data)=>{
+        logOut();
+    })
+}
+
+(<HTMLElement>document.getElementById("loginError")).style.display="none";
+(<HTMLElement>document.getElementById("logOut")).onclick=logOut;
+(<HTMLElement>document.getElementById("deleteAccount")).onclick=deleteAccount;
+
+
+

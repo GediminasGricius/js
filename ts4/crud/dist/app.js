@@ -1,4 +1,4 @@
-import { loginExec, registerExec } from "./auth.js";
+import { loadUser, loginExec, registerExec, showLogin } from "./auth.js";
 import { fetchRegistrations } from "./fetchData.js";
 import { loadData } from "./loadData.js";
 const markInput = document.getElementById("mark");
@@ -36,9 +36,8 @@ export const userInfo = {
     loggedin: false,
 };
 // Paslėpiame duomenų sekciją ir įjungiame rodyti prisijungimo sekciją
-document.getElementById("loginSection").style.display = "block";
-document.getElementById("dataSection").style.display = "none";
-document.getElementById("loginError").style.display = "none";
+showLogin();
+loadUser();
 loadDataButton.onclick = loadData;
 //Registracijos URL
 //https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAZuYggKgrCTnZfT9yn6NIeRFV0LmgY8tg

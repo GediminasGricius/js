@@ -1,8 +1,9 @@
-import { loginExec, registerExec } from "./auth.js";
+import { loadUser, loginExec, registerExec, showLogin } from "./auth.js";
 import { fetchRegistrations } from "./fetchData.js";
 import { loadData } from "./loadData.js";
 import { Registration } from "./registration.js";
 import { showData } from "./showData.js";
+import { User } from "./user.js";
 
 
 const markInput=<HTMLInputElement>document.getElementById("mark");
@@ -43,18 +44,17 @@ addRegistrationButton.onclick=()=>{
     })
 };
 
-export const userInfo={
+export const userInfo:User={
     email:"",
     idToken:"",
     loggedin:false,
 };
 
 // Paslėpiame duomenų sekciją ir įjungiame rodyti prisijungimo sekciją
-(<HTMLElement>document.getElementById("loginSection")).style.display="block";
-(<HTMLElement>document.getElementById("dataSection")).style.display="none";
-(<HTMLElement>document.getElementById("loginError")).style.display="none";
+showLogin();
 
 
+loadUser();
 
 loadDataButton.onclick=loadData;
 
